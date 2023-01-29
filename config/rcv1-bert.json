@@ -1,14 +1,14 @@
 {
   "data": {
-    "dataset": "nyt",
-    "data_dir": "./data/nyt",
-    "train_file": "nyt_train.json",
-    "val_file": "nyt_val.json",
-    "test_file": "nyt_test.json",
-    "label_desc_file": "nyt_label_desc.json",
-    "prob_json": "nyt_prob.json",
-    "prob_child_to_parent_json": "nyt_prob_child_parent.json",
-    "hierarchy": "nyt.taxonomy",
+    "dataset": "rcv1v2",
+    "data_dir": "./data/rcv1v2",
+    "train_file": "rcv1v2_train.json",
+    "val_file": "rcv1v2_val.json",
+    "test_file": "rcv1v2_test.json",
+    "label_desc_file": "rcv1v2_label_desc.json",
+    "prob_json": "rcv1v2_prob.json",
+    "prob_child_to_parent_json": "rcv1v2_prob_child_parent.json",
+    "hierarchy": "rcv1v2.taxonomy",
     "total_sample_num": 6,
     "sample_num": 2,
     "positive_num": 1,
@@ -16,7 +16,7 @@
     "layer_num": 2
   },
   "vocabulary": {
-    "dir": "vocab_nyt",
+    "dir": "vocab_rcv1v2",
     "vocab_dict": "word.dict",
     "max_token_vocab": 60000,
     "label_dict": "label.dict"
@@ -30,14 +30,14 @@
       "init_type": "uniform"
     },
     "label": {
-      "dimension": 300,
+      "dimension": 768,
       "type": "random",
       "dropout": 0.5,
       "init_type": "kaiming_uniform"
     }
   },
   "text_encoder": {
-    "max_length": 256,
+    "max_length": 300,
     "RNN": {
       "bidirectional": true,
       "num_layers": 1,
@@ -61,35 +61,35 @@
   },
   "matching_net": {
     "dimension": 200,
-    "dropout": 0.5,
+    "dropout": 0.1,
     "output_relu": 0,
     "output_dropout": 0,
-    "l2_norm": 0
+    "l2_norm": 1
   },
   "model": {
-    "type": "HiMatch",
+    "type": "HiMatch-bert",
     "linear_transformation": {
-      "text_dimension": 300,
+      "text_dimension": 768,
       "node_dimension": 300,
-      "dropout": 0.5
+      "dropout": 0.1
     },
     "classifier": {
       "num_layer": 1,
-      "output_drop": 1,
+      "output_drop": 0,
       "dropout": 0.5
     }
   },
   "train": {
     "optimizer": {
       "type": "Adam",
-      "learning_rate": 0.0001,
+      "learning_rate": 2e-5,
       "lr_decay": 1.0,
       "lr_patience": 5,
       "early_stopping": 50
     },
-    "batch_size": 64,
+    "batch_size": 8,
     "start_epoch": 0,
-    "end_epoch": 150,
+    "end_epoch": 200,
     "refresh_data_loader": 1,
     "loss": {
       "classification": "BCEWithLogitsLoss",
@@ -104,26 +104,23 @@
       "num_workers": 10
     },
     "checkpoint": {
-      "dir": "glove-nyt_checkpoint",
+      "dir": "bert-rcv1v2_checkpoint",
       "max_number": 10,
       "save_best": ["Macro_F1", "Micro_F1"]
     }
   },
   "eval": {
-    "batch_size": 64,
+    "batch_size": 4,
     "threshold": 0.5,
-    "eval_steps": 200,
-    "begin_eval_epoch": 20
+    "eval_steps": 100,
+    "begin_eval_epoch": 100
   },
   "test": {
     "best_checkpoint": "best_micro_HiAGM-TP",
-    "batch_size": 64
+    "batch_size": 4
   },
   "log": {
     "level": "info",
-    "filename": "glove-nyt.log"
-  },
-  "contrast": {
-    "gamma": 1.0
+    "filename": "bert-rcv1v2.log"
   }
 }

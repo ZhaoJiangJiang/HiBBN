@@ -1,14 +1,14 @@
 {
   "data": {
-    "dataset": "nyt",
-    "data_dir": "./data/nyt",
-    "train_file": "nyt_train.json",
-    "val_file": "nyt_val.json",
-    "test_file": "nyt_test.json",
-    "label_desc_file": "nyt_label_desc.json",
-    "prob_json": "nyt_prob.json",
-    "prob_child_to_parent_json": "nyt_prob_child_parent.json",
-    "hierarchy": "nyt.taxonomy",
+    "dataset": "wos",
+    "data_dir": "./data/wos",
+    "train_file": "wos_train.json",
+    "val_file": "wos_val.json",
+    "test_file": "wos_test.json",
+    "label_desc_file": "wos_label_desc.json",
+    "prob_json": "wos_prob.json",
+    "prob_child_to_parent_json": "wos_prob_child_parent.json",
+    "hierarchy": "wos.taxnomy",
     "total_sample_num": 6,
     "sample_num": 2,
     "positive_num": 1,
@@ -16,7 +16,7 @@
     "layer_num": 2
   },
   "vocabulary": {
-    "dir": "vocab_nyt",
+    "dir": "vocab_wos",
     "vocab_dict": "word.dict",
     "max_token_vocab": 60000,
     "label_dict": "label.dict"
@@ -104,7 +104,7 @@
       "num_workers": 10
     },
     "checkpoint": {
-      "dir": "glove-nyt_checkpoint",
+      "dir": "glove-wos_checkpoint",
       "max_number": 10,
       "save_best": ["Macro_F1", "Micro_F1"]
     }
@@ -121,7 +121,7 @@
   },
   "log": {
     "level": "info",
-    "filename": "glove-nyt.log"
+    "filename": "glove-wos.log"
   },
   "contrast": {
     "gamma": 1.0
